@@ -3,8 +3,8 @@
 namespace app\models;
 
 
-class Users extends  \yii\db\ActiveRecord 
-{   
+class Users extends \yii\db\ActiveRecord
+{
 
     public static function tableName()
     {
@@ -27,10 +27,10 @@ class Users extends  \yii\db\ActiveRecord
 
 
             [['name'], 'string', 'max' => 100],
-            [['name','id'], 'required'],
+            [['name', 'id'], 'required'],
             [['name'], 'unique'],
 
         ];
     }
-  
+
 }
