@@ -25,12 +25,16 @@ class TransactionForm extends Model
         ];
     }
 
+    /**
+     * @return bool Проверяем транзакцию
+     */
     public function Validate()
     {
         $sender = Users::findOne(['id'=>$this->id_sender]);
         $requester = Users::findOne(['id'=>$this->id_requester]);
 
         if(!$sender||!$requester) return false;
+        //Баланс отправителя должен быть больше отправляемой суммы
         if($sender['balance']<$this->sum){
             $this->addError('error','Баланс отправителя меньше '.$this->sum);
             return false;
@@ -39,9 +43,10 @@ class TransactionForm extends Model
     }
 
     /**
-     * @param $sender Users
-     * @param $requester Users
-     * @param $sum double
+     * Запускаем транзацию
+     * @param $sender Users Отправитель
+     * @param $requester Users Получатель
+     * @param $sum double Сумма
      */
     private function makeTransaction($sender,$requester,$sum)
     {
