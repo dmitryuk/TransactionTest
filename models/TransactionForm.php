@@ -35,7 +35,7 @@ class TransactionForm extends Model
 
         if (!$sender || !$requester) return false;
         //Баланс отправителя должен быть больше отправляемой суммы
-        if ($sender['balance'] < $this->sum) {
+        if ($sender->balance < $this->sum) {
             $this->addError('error', 'Баланс отправителя меньше ' . $this->sum);
             return false;
         }
