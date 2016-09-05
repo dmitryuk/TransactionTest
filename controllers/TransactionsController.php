@@ -15,11 +15,15 @@ class TransactionsController extends \yii\web\Controller
         $users = Users::find()->all();
 
         $model = new TransactionForm();
-        if ($model->load(\yii::$app->request->post()) && $model->validate()) {
-            return $this->render('success', ['model' => $model]);
+        if ($model->load(\yii::$app->request->post()) && $model->Validate() && $model->makeTransaction()) {
+            return $this->redirect(array('success'));
         }
         return $this->render('main', ['users' => $users, 'model' => $model]);
     }
 
+    public function actionSuccess()
+    {
+        return $this->render('success');
+    }
 
 }

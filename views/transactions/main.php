@@ -19,7 +19,6 @@ use yii\bootstrap\ActiveForm;
     echo $form->field($model,'id_sender')->dropDownList($items,['style'=>'width:auto']);
     echo $form->field($model,'id_requester')->dropDownList($items,['style'=>'width:auto']);
     echo $form->field($model,'sum')->textInput(['style'=>'width:auto']);
-    echo \yii\helpers\Html::submitButton('Отправить');
+    echo \yii\helpers\Html::submitButton('Отправить',['Class'=>'btn btn-success']);
     ActiveForm::end();
-
-
+?>
