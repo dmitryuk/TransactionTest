@@ -34,7 +34,6 @@ class TransactionForm extends Model
     {
         $this->sender = Users::findOne(['id' => $this->id_sender]);
         $this->requester = Users::findOne(['id' => $this->id_requester]);
-
         if (!$this->sender || !$this->requester) return false;
         //Баланс отправителя должен быть больше отправляемой суммы
         if ($this->sender->balance < $this->sum) {
@@ -52,10 +51,7 @@ class TransactionForm extends Model
      */
     public function makeTransaction()
     {
-
-
         $transaction = \yii::$app->db->beginTransaction();
-
         try {
             $sender = \yii::$app->db->createCommand("select `id`,`balance` from `users` where `id`=:id_sender   FOR UPDATE",
                 [':id_sender' => $this->id_sender]
@@ -65,10 +61,8 @@ class TransactionForm extends Model
             )->queryOne();
             if (!$sender || !$requester)
                 throw new \Exception('Отправитель или получатель не существует');
-
             $q1 = \yii::$app->db->createCommand("Update `users` set `balance`=`balance`+:balance where `id`=:id", ['balance' => $this->sum, 'id' => $sender['id']])->execute();
             $q2 = \yii::$app->db->createCommand("Update `users` set `balance`=`balance`-:balance where `id`=:id", ['balance' => $this->sum, 'id' => $requester['id']])->execute();
-
             if (!$q1 || !$q2)
                 throw new \Exception('Ошибка сохрания баланса');
             $transaction->commit();

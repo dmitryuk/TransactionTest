@@ -13,7 +13,6 @@ class TransactionsController extends \yii\web\Controller
     public function actionIndex()
     {
         $users = Users::find()->all();
-
         $model = new TransactionForm();
         if ($model->load(\yii::$app->request->post()) && $model->Validate() && $model->makeTransaction()) {
             return $this->redirect(array('success'));
